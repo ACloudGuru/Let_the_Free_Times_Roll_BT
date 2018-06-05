@@ -1,0 +1,14 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+      - printenv
+      - rm -rf node_modules
+      - npm install
+  build:
+    commands:
+      - npm run build -prod
+  post_build:
+    commands:
+      - aws --region <REGION> s3 sync ./dist/ s3://<BUCKET_NAME>/ --acl=public-read --delete
